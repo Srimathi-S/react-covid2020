@@ -1,0 +1,46 @@
+.overall-information
+{
+    display: flex;
+}
+.information{
+    height:100px;
+    width:500px;
+    margin:60px;
+    border:2px solid black;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+#total-confirmed
+{
+    color:red;
+}
+#total-active
+{
+    color:blue;
+}
+#total-recovered
+{
+    color:green
+}
+#total-deceased
+{
+    color:black;
+}
+table
+{
+    margin:100px;
+}
+td
+{
+    border:2px solid white;
+    background-color:gainsboro;
+    align-items: center;
+}
+#state-name
+{
+    font-weight: 500;
+}
+thead{
+    font-weight: 500;
+}

@@ -25,7 +25,7 @@ class HomeComponent extends Component {
         .then((response)=>{
             let covidData=response.data;
             let statewiseCovidData=[];
-            statewiseCovidData=state.map((stateName,index)=>{
+            statewiseCovidData=state.map((stateName)=>{
                 let districtData=Object.values(covidData[stateName]['districtData']);
                 let activeCases=districtData.reduce((previous,data)=>previous+data.active,0);
                 totalActive+=activeCases;
@@ -35,16 +35,18 @@ class HomeComponent extends Component {
                 totalRecovered+=recoveredCases;
                 let deceasedCases=districtData.reduce((previous,data)=>previous+data.deceased,0);
                 totalDeceased+=deceasedCases;
+                let recoveryRate=recoveredCases/activeCases;
                 let stateCovidInformation={
                     stateName:stateName,
                     activeCases:activeCases,
                     confirmedCases:confirmedCases,
                     recoveredCases:recoveredCases,
-                    deceasedCases:deceasedCases
+                    deceasedCases:deceasedCases,
+                    recoveryRate:recoveryRate
                 }
                 return stateCovidInformation;
             });
-           // console.log(statewiseCovidData);
+           statewiseCovidData.sort((data1,data2)=>data1.recoveryRate-data2.recoveryRate);
             this.setState({
                 statewiseCovidData:[...statewiseCovidData],
                 displayData:[...statewiseCovidData],
@@ -59,6 +61,7 @@ class HomeComponent extends Component {
     modifyDisplayList=(event)=>{
         let searchText=event.target.value;
         let modifiedDisplayData=this.state.statewiseCovidData.filter((data)=>data.stateName.toUpperCase().includes(searchText.toUpperCase()));
+        modifiedDisplayData.sort((data1,data2)=>data1.recoveryRate-data2.recoveryRate);
         this.setState({
             displayData:modifiedDisplayData
         })
@@ -66,6 +69,7 @@ class HomeComponent extends Component {
     render() {
         return (
             <div>
+                <h1>India covid cases</h1>
                 <SearchComponent modifyDisplayList={(event)=>this.modifyDisplayList(event)}/>
                 <StateComponent statewiseCovidData={this.state.displayData} totalActive={this.state.totalActive} totalConfirmed={this.state.totalConfirmed} totalRecovered={this.state.totalRecovered} totalDeceased={this.state.totalDeceased}/>
             </div>

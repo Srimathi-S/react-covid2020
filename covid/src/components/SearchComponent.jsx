@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-
+import './searchComponent.css';
 class SearchComponent extends Component {
     render() {
         return (
-            <div>
+            <div className="search">
                 <input type="text" placeholder="Search state" onChange={this.props.modifyDisplayList.bind(this)}/>
             </div>
         );
